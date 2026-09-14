@@ -32,7 +32,9 @@ from core.config import (STT_BEAM, STT_BEAM_FINAL, STT_BARGE_RMS_MULT,
                          STT_LOOP_MIN_WORDS, STT_LOOP_PROMPT, STT_MAX_UTTERANCE,
                          STT_MIC_GAIN, STT_MIC_PROMPT, STT_MIN_SPEECH,
                          STT_MIN_TEXT_CHARS, STT_MODEL, STT_NO_SPEECH_THRESHOLD,
-                         STT_PARTIAL_SEC, STT_RMS_THRESHOLD, STT_RMS_NOISE_MULT,
+                         STT_PARTIAL_SEC, STT_REPEAT_FILTER,
+                         STT_REPEAT_MAX_UNIQUE_RATIO, STT_REPEAT_MIN_WORDS,
+                         STT_RMS_THRESHOLD, STT_RMS_NOISE_MULT,
                          STT_SAMPLE_RATE, STT_SILENCE_CUT,
                          STT_VAD_MIN_SILENCE_MS, STT_WHISPER_VAD)
 
@@ -238,7 +240,7 @@ class STTModule:
         loopback — используется PyAudioWPatch; устройство работает на своей
         частоте (обычно 48 кГц), recognizer ресемплирует в 16 кГц.
 
-        БЛОКИРУЮЩЕЕ чтение, не callback: C-механизм колбэков PyAudioWPatch на
+        БЛОКИРУЮЩЕЕ чтение, не callback: C-механизм колбеков PyAudioWPatch на
         этой машине не доставляет аудио (SystemError getargs, живой тест
         v14.6), а stream.read() в потоке захвата работает надёжно.
         Живой тест v14.6 #2: когда рендер-устройство молчит, WASAPI-loopback
@@ -598,6 +600,8 @@ class STTModule:
         """Чистое решение для фильтра финального текста без потери mic-команд."""
         if self._is_hallucination(text):
             return True
+        if self._is_repetition(text):
+            return True
         norm = self._normalize_text(text)
         if len(norm.replace(" ", "")) < STT_MIN_TEXT_CHARS:
             return True
@@ -612,6 +616,18 @@ class STTModule:
     @staticmethod
     def _normalize_text(text: str) -> str:
         return " ".join(text.strip().strip(".!?…-—\"' ").lower().split())
+
+    @staticmethod
+    def _is_repetition(text: str) -> bool:
+        """«Заезженная пластинка»: whisper на зацикленном шуме повторяет одно
+        слово/слог («так так так так…», «да-да-да-да»). Если в достаточно
+        длинной фразе доля уникальных слов слишком мала — это не речь."""
+        if not STT_REPEAT_FILTER:
+            return False
+        words = STTModule._normalize_text(text).replace("-", " ").split()
+        if len(words) < STT_REPEAT_MIN_WORDS:
+            return False
+        return len(set(words)) / len(words) <= STT_REPEAT_MAX_UNIQUE_RATIO
 
     def _is_hallucination(self, text: str) -> bool:
         """Whisper на шуме/тишине выдаёт типовые «титры»-галлюцинации. Если ВСЯ
