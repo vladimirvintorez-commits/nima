@@ -99,12 +99,31 @@ STT_LOOP_MIN_WORDS = int(os.environ.get("NIMA_STT_LOOP_MIN_WORDS", "2"))
 STT_NO_SPEECH_THRESHOLD = float(os.environ.get("NIMA_STT_NO_SPEECH", "0.6"))
 STT_LOGPROB_THRESHOLD = float(os.environ.get("NIMA_STT_LOGPROB", "-0.8"))
 STT_COMPRESSION_THRESHOLD = float(os.environ.get("NIMA_STT_COMPRESSION", "2.2"))
-# Фразы-галлюцинации Whisper: если ВСЯ распознанная фраза — одна из них, выкидываем
+# Фразы-галлюцинации Whisper: если ВСЯ распознанная фраза — одна из них, выкидываем.
+# v14.8.50: список расширен по живым логам (титры YouTube, призывы подписаться,
+# музыкальные ремарки, англоязычные хвосты). Свой список: NIMA_STT_HALLUCINATIONS.
 STT_HALLUCINATION_PHRASES = [p.strip().lower() for p in os.environ.get(
     "NIMA_STT_HALLUCINATIONS",
-    "продолжение следует|спасибо за просмотр|спасибо за внимание|"
-    "субтитры сделал|субтитры создавал|редактор субтитров|"
-    "субтитры подготовил|dimatorzok|続きは|thanks for watching").split("|") if p.strip()]
+    "продолжение следует|продолжение в следующей серии|"
+    "спасибо за просмотр|спасибо за просмотр видео|спасибо за внимание|"
+    "спасибо что смотрели|"
+    "субтитры сделал|субтитры создавал|субтитры подготовил|"
+    "субтитры делал dimatorzok|редактор субтитров|"
+    "редактор субтитров а.семкин корректор а.егорова|корректор а.егорова|"
+    "субтитры|dimatorzok|続きは|"
+    "подписывайтесь на канал|подписывайтесь|не забудьте подписаться|"
+    "ставьте лайки|ставьте лайки и подписывайтесь|"
+    "ставьте лайк и подписывайтесь на канал|"
+    "играет музыка|звучит музыка|аплодисменты|"
+    "thanks for watching|thank you for watching|please subscribe|"
+    "like and subscribe").split("|") if p.strip()]
+# Фильтр «заезженной пластинки»: whisper на зацикленном шуме повторяет одно и то
+# же слово/слог (v14.8.49: «так так так так…», «да-да-да-да-да»). Если в достаточно
+# длинной фразе доля уникальных слов слишком мала — это не речь. NIMA_STT_REPEAT=0
+# отключает фильтр целиком; пороги настраиваются отдельными переменными.
+STT_REPEAT_FILTER = os.environ.get("NIMA_STT_REPEAT", "1") == "1"
+STT_REPEAT_MIN_WORDS = int(os.environ.get("NIMA_STT_REPEAT_MIN_WORDS", "6"))
+STT_REPEAT_MAX_UNIQUE_RATIO = float(os.environ.get("NIMA_STT_REPEAT_RATIO", "0.34"))
 # Сегментация речи: энергия + тишина
 STT_SAMPLE_RATE = 16000
 STT_SILENCE_CUT = float(os.environ.get("NIMA_STT_SILENCE_CUT", "0.5"))   # сек тишины = конец фразы
