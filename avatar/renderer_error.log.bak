@@ -1,0 +1,43 @@
+2026-09-13T13:24:42.260Z console[1] viewer.bundle.js:44297 [nima] loadOutfit: Nima_drees.vrm | было: (пусто) | анимация шла: false
+2026-09-13T13:24:42.261Z console[1] viewer.bundle.js:44307 [nima] loadOutfit: Nima_drees.vrm
+2026-09-13T13:24:42.300Z console[1] viewer.bundle.js:44199 [nima] VRMA queued до загрузки модели: VRMA_01.vrma
+2026-09-13T13:24:42.301Z console[2] sandbox_bundle:2 %cElectron Security Warning (Disabled webSecurity) font-weight: bold; This renderer process has "webSecurity" disabled. This exposes users of this app to severe security risks. For more information and help, consult https://electronjs.org/docs/tutorial/security. This warning will not show up once th
+2026-09-13T13:24:42.301Z console[2] sandbox_bundle:2 %cElectron Security Warning (allowRunningInsecureContent) font-weight: bold; This renderer process has "allowRunningInsecureContent" enabled. This exposes users of this app to severe security risks. For more information and help, consult https://electronjs.org/docs/tutorial/security. This warning wi
+2026-09-13T13:24:42.301Z console[2] sandbox_bundle:2 %cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security Policy set or a policy with "unsafe-eval" enabled. This exposes users of this app to unnecessary security risks. For more information and help, consult https://elect
+2026-09-13T13:24:42.349Z console[1] viewer.bundle.js:44313 [nima] файл получен, байт: 16822868
+2026-09-13T13:24:42.569Z console[1] viewer.bundle.js:44552 [nima] jelly: патчу материалов = 21 | радиус = 0.112 | стороны = J_Sec_L_Bust1 / J_Sec_R_Bust1
+2026-09-13T13:24:42.569Z console[1] viewer.bundle.js:44293 [nima] liven: демпфер снижен на цепочках = 53
+2026-09-13T13:24:42.570Z console[1] viewer.bundle.js:44280 [nima] colliders: сфер = 18 на цепочках = 61
+2026-09-13T13:24:42.570Z console[1] viewer.bundle.js:44410 [nima] модель готова: Nima_drees.vrm | rotation.y = 3.14
+2026-09-13T13:24:42.577Z console[1] viewer.bundle.js:44645 [nima] cloth: тканевых пружинных цепочек = 18
+2026-09-13T13:24:44.918Z console[2] viewer.bundle.js:43351 createVRMAnimationClip: VRMLookAtQuaternionProxy is not found. Creating a new one automatically. To suppress this warning, create a VRMLookAtQuaternionProxy manually
+2026-09-13T13:24:44.924Z console[1] viewer.bundle.js:44230 [nima] VRMA play: VRMA_01.vrma
+2026-09-13T13:24:44.931Z console[1] viewer.bundle.js:45256 [nima] frame: calls= 21 canvas= 460 x 790 vrm= true opaque= true
+2026-09-13T13:24:54.376Z console[1] viewer.bundle.js:44190 [nima] VRMA finished
+2026-09-13T13:24:56.310Z console[1] viewer.bundle.js:44794 [nima] safe idle event: ears L
+2026-09-13T13:25:02.362Z console[1] viewer.bundle.js:44230 [nima] VRMA play: VRMA_01.vrma
+2026-09-13T13:25:02.905Z console[2] sandbox_bundle:2 %cElectron Security Warning (Disabled webSecurity) font-weight: bold; This renderer process has "webSecurity" disabled. This exposes users of this app to severe security risks. For more information and help, consult https://electronjs.org/docs/tutorial/security. This warning will not show up once th
+2026-09-13T13:25:02.906Z console[2] sandbox_bundle:2 %cElectron Security Warning (allowRunningInsecureContent) font-weight: bold; This renderer process has "allowRunningInsecureContent" enabled. This exposes users of this app to severe security risks. For more information and help, consult https://electronjs.org/docs/tutorial/security. This warning wi
+2026-09-13T13:25:02.906Z console[2] sandbox_bundle:2 %cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security Policy set or a policy with "unsafe-eval" enabled. This exposes users of this app to unnecessary security risks. For more information and help, consult https://elect
+2026-09-13T13:25:02.908Z console[1] viewer.bundle.js:44297 [nima] loadOutfit: Nima_drees.vrm | было: (пусто) | анимация шла: false
+2026-09-13T13:25:02.909Z console[1] viewer.bundle.js:44307 [nima] loadOutfit: Nima_drees.vrm
+2026-09-13T13:25:02.996Z console[1] viewer.bundle.js:44313 [nima] файл получен, байт: 16822868
+2026-09-13T13:25:03.079Z console[1] viewer.bundle.js:44199 [nima] VRMA queued до загрузки модели: VRMA_01.vrma
+2026-09-13T13:25:03.231Z console[1] viewer.bundle.js:44552 [nima] jelly: патчу материалов = 21 | радиус = 0.112 | стороны = J_Sec_L_Bust1 / J_Sec_R_Bust1
+2026-09-13T13:25:03.231Z console[1] viewer.bundle.js:44293 [nima] liven: демпфер снижен на цепочках = 53
+2026-09-13T13:25:03.232Z console[1] viewer.bundle.js:44280 [nima] colliders: сфер = 18 на цепочках = 61
+2026-09-13T13:25:03.232Z console[1] viewer.bundle.js:44410 [nima] модель готова: Nima_drees.vrm | rotation.y = 3.14
+2026-09-13T13:25:03.239Z console[1] viewer.bundle.js:44645 [nima] cloth: тканевых пружинных цепочек = 18
+2026-09-13T13:25:05.618Z console[2] viewer.bundle.js:43351 createVRMAnimationClip: VRMLookAtQuaternionProxy is not found. Creating a new one automatically. To suppress this warning, create a VRMLookAtQuaternionProxy manually
+2026-09-13T13:25:05.622Z console[1] viewer.bundle.js:44230 [nima] VRMA play: VRMA_01.vrma
+2026-09-13T13:25:05.629Z console[1] viewer.bundle.js:45256 [nima] frame: calls= 21 canvas= 460 x 790 vrm= true opaque= false
+2026-09-13T13:25:15.037Z console[1] viewer.bundle.js:44190 [nima] VRMA finished
+2026-09-13T13:25:16.970Z console[1] viewer.bundle.js:44794 [nima] safe idle event: tail L
+2026-09-13T13:25:37.404Z console[1] viewer.bundle.js:44794 [nima] safe idle event: tail R
+2026-09-13T13:25:47.634Z console[1] viewer.bundle.js:44794 [nima] safe idle event: tail L
+2026-09-13T13:25:53.913Z console[1] viewer.bundle.js:44190 [nima] VRMA finished
+2026-09-13T13:25:53.914Z console[1] viewer.bundle.js:44794 [nima] safe idle event: tail R
+2026-09-13T13:26:06.654Z console[1] viewer.bundle.js:44794 [nima] safe idle event: tail L
+2026-09-13T13:26:07.481Z console[1] viewer.bundle.js:44794 [nima] safe idle event: tail R
+2026-09-13T13:26:20.285Z console[1] viewer.bundle.js:44794 [nima] safe idle event: ears L
+2026-09-13T13:26:26.954Z console[1] viewer.bundle.js:44794 [nima] safe idle event: tail L

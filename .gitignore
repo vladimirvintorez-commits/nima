@@ -1,0 +1,26 @@
+# Тяжёлое: не для GitHub (лимит репозитория)
+myenv/
+models/*.gguf
+models/nimfea_full/
+tools/llamacpp/
+cache/
+logs/
+
+# node
+node_modules/
+avatar/node_modules/
+
+# Приватные данные (диалоги, профили людей)
+memory.json
+memory/
+data/memory_backup_*.json
+data/people_removed_*.json
+data/backups/
+avatar/avatar_state.json
+
+# Мусор
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+Thumbs.db

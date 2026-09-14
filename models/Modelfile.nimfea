@@ -1,0 +1,9 @@
+# Modelfile Нимфеи: дообученная модель (qwen2.5:3b + LoRA, датасет v6), Q4_K_M.
+# Сборка:  cd models && ollama create nimfea -f Modelfile.nimfea
+FROM ./nimfea-q4_k_m.gguf
+
+PARAMETER temperature 0.85
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|im_start|>"

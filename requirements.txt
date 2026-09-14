@@ -1,0 +1,18 @@
+# Зависимости рантайма Нимфеи v14 (venv myenv/)
+# torch/torchaudio ставятся отдельно под CUDA:
+#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+coqui-tts>=0.27,<0.28
+transformers>=4.57,<5
+faster-whisper>=1.2
+sounddevice
+numpy
+requests
+
+# v14: интернет-поиск (web/) — DuckDuckGo без API-ключа
+ddgs
+
+# v14: голосовая идентификация (voice_id/) — ECAPA-TDNN на CPU.
+# Без неё система работает, определяя собеседника по каналу.
+# Модель (~80 МБ) скачается в cache/ecapa при первом использовании.
+speechbrain

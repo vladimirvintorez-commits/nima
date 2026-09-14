@@ -1,0 +1,6 @@
+{
+  "name": "nima-ring-menu",
+  "version": "1.0.0",
+  "description": "Нимфея — кольцевое дебаг-меню (Electron)",
+  "main": "main.cjs"
+}

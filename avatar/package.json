@@ -1,0 +1,20 @@
+{
+  "name": "nima-avatar",
+  "version": "1.0.0",
+  "description": "Прозрачное окно Нимфеи: VRM-аватар с перетаскиванием и симметричным ресайзом",
+  "main": "main.cjs",
+  "scripts": {
+    "build": "esbuild renderer/viewer.js --bundle --outfile=renderer/viewer.bundle.js",
+    "start": "electron .",
+    "build-vrm": "npm run build"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "esbuild": "^0.24.0"
+  },
+  "dependencies": {
+    "@pixiv/three-vrm": "^3.1.0",
+    "@pixiv/three-vrm-animation": "^3.5.5",
+    "three": "^0.169.0"
+  }
+}

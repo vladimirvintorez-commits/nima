@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    html, body {
+      margin: 0; padding: 0; width: 100%; height: 100%;
+      background: transparent; overflow: hidden;
+      font-family: "Segoe UI", sans-serif;
+      user-select: none;
+    }
+    #scene { position: absolute; inset: 0; }
+    /* ── две точки управления ─────────────────────────────────────────── */
+    .dot {
+      position: absolute; top: 6px; width: 14px; height: 14px;
+      border-radius: 50%; z-index: 10; cursor: pointer;
+      background: rgba(255, 176, 0, 0.85);
+      box-shadow: 0 0 6px rgba(255, 176, 0, 0.6);
+      transition: background .2s, box-shadow .2s;
+    }
+    .dot:hover { background: rgba(255, 220, 80, 1); }
+    /* центральная: перетаскивание окна (+ двойной щелчок = блокировка) */
+    #dot-drag { left: 50%; transform: translateX(-50%); }
+    /* правая: симметричное изменение размера */
+    #dot-resize { right: 8px; cursor: nwse-resize; }
+    .locked .dot { background: rgba(255, 68, 68, 0.9); box-shadow: 0 0 6px rgba(255,68,68,.6); }
+    .locked #dot-drag { cursor: default; }
+    .locked #dot-resize { cursor: default; }
+    #hint {
+      position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
+      color: rgba(255, 200, 80, 0.85); font-size: 11px;
+      background: rgba(0,0,0,0.55); padding: 2px 8px; border-radius: 6px;
+      opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 11;
+      white-space: nowrap;
+    }
+    #hint.show { opacity: 1; }
+    #error {
+      position: absolute; bottom: 8px; left: 8px; right: 8px;
+      color: #ff6a6a; font-size: 12px; white-space: pre-wrap; z-index: 12;
+      text-shadow: 0 1px 2px #000;
+    }
+    /* ── субтитры (v14.6): караоке, обводка = цвет говорящего ────────── */
+    #subtitle {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      max-width: 92%; z-index: 9; text-align: center; pointer-events: none;
+      font-size: 24px; line-height: 1.35; font-weight: 600;   /* +8 к 16 (v14.7.2) */
+      color: rgba(255, 255, 255, 0.30);            /* тусклая база (ещё не сказано) */
+      -webkit-text-stroke: 1.2px var(--sub-color, #fff);
+      text-shadow: 0 0 7px #000, 0 2px 4px #000, 0 0 2px #000;
+      display: none;
+      opacity: 0;                                  /* плавное появление всей строки */
+      transition: opacity .28s ease;
+    }
+    #subtitle.sub-visible { opacity: 1; }
+    .sub-bright {
+      position: absolute; inset: 0;
+      color: transparent;                          /* заливка — через градиент-клип */
+      background-image: linear-gradient(90deg, #fff 50%, transparent 50%);
+      background-size: 200% 100%;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: 0 0 7px #000, 0 2px 4px #000, 0 0 2px #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+  <div class="dot" id="dot-drag" title="Перетащи окно · двойной щелчок — блокировка"></div>
+  <div class="dot" id="dot-resize" title="Тяни — размер меняется симметрично от центра"></div>
+  <div id="hint"></div>
+  <div id="subtitle"></div>
+  <div id="error"></div>
+  <script src="./viewer.bundle.js"></script>
+</body>
+</html>
