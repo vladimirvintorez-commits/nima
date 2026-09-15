@@ -29,9 +29,13 @@ def _sampling_options() -> dict:
     - top_k 40 + min_p 0.05 — отсекают маловероятную ерунду, характер не трогают;
     - presence_penalty 0.0 (было 0.3) — не выталкивает модель с темы (причина
       ответов «невпопад» у маленькой модели).
+    - num_predict 200 — потолок длины ответа (persona = 1-3 предложения):
+      без него из Modelfile прилетает num_predict 32768 и ответ может
+      «поехать» в простыню на десятки секунд (латентность стрима).
     LLM_TEMPERATURE из core.config остаётся совместимым: тот же NIMA_LLM_TEMPERATURE.
     """
     return {"num_ctx": LLM_NUM_CTX,
+            "num_predict": int(os.environ.get("NIMA_LLM_NUM_PREDICT", "200")),
             "temperature": float(os.environ.get("NIMA_LLM_TEMPERATURE", "0.6")),
             "top_p": LLM_TOP_P,
             "top_k": int(os.environ.get("NIMA_LLM_TOP_K", "40")),
