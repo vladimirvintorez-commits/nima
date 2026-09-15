@@ -38,6 +38,33 @@ _SKIP_SOURCES = {"initiative", "threads"}
 # Сколько раз повторить эталонную пару из manual_pairs.jsonl (вес против мусора)
 MANUAL_WEIGHT = 5
 
+# --- Авто-префильтр черновика (v14.8.53) ---------------------------------
+# Урок: даже во «второй партии» из живой памяти встречаются заведомо негодные
+# пары — они зря съедают время курации, а проскочив в датасет, закрепляют
+# «тупость» (мусор на входе → мусор на выходе). Явный мусор помечаем
+# verdict="bad" сразу: curate.py такие пропускает (пропускает уже размеченные),
+# то есть до глаз доходит только то, что реально стоит судить. Пороги мягкие —
+# режем лишь очевидное, спорное оставляем человеку (verdict="").
+_MIN_ASSISTANT_CHARS = 2      # пустой/односимвольный ответ — не пример
+_MAX_ASSISTANT_CHARS = 600    # простыня — не в характере (её норма 1-3 фразы)
+_MIN_USER_CHARS = 2           # без реплики юзера пара бессмысленна
+
+
+def _looks_bad(user: str, assistant: str) -> str | None:
+    """Причина забраковать пару автоматически, или None если ок/сомнительно."""
+    u, a = user.strip(), assistant.strip()
+    if len(a) < _MIN_ASSISTANT_CHARS:
+        return "пустой ответ"
+    if len(u) < _MIN_USER_CHARS:
+        return "пустая реплика юзера"
+    if len(a) > _MAX_ASSISTANT_CHARS:
+        return "простыня (не 1-3 фразы)"
+    if a.lower() == u.lower():
+        return "эхо вопроса"
+    if not any(ch.isalpha() for ch in a):
+        return "ответ без слов"
+    return None
+
 
 def collect_pairs() -> list[dict]:
     """Черновые пары [(user, assistant, source)] из живой истории memory.json."""
@@ -77,13 +104,21 @@ def dedupe(pairs: list[dict]) -> list[dict]:
 
 def build_candidates() -> None:
     pairs = dedupe(collect_pairs())
+    auto_bad = 0
     with CANDIDATES_PATH.open("w", encoding="utf-8") as fh:
         for i, p in enumerate(pairs):
+            reason = _looks_bad(p["user"], p["assistant"])
+            if reason:
+                auto_bad += 1
             fh.write(json.dumps({
                 "id": i, "user": p["user"], "assistant": p["assistant"],
-                "source": p["source"], "verdict": "",   # "" | ok | bad
+                "source": p["source"],
+                "verdict": "bad" if reason else "",   # "" | ok | bad
+                "auto": reason or "",                 # причина авто-брака (для аудита)
             }, ensure_ascii=False) + "\n")
     print(f"Черновик: {len(pairs)} пар → {CANDIDATES_PATH}")
+    print(f"Авто-брак (явный мусор, курация его не показывает): {auto_bad}; "
+          f"на ручной разбор: {len(pairs) - auto_bad}.")
     print("Дальше: разбор через training/curate.py (или руками: verdict ok/bad, ответ можно править).")
 
 
