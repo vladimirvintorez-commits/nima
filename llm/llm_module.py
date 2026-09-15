@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import time
 import urllib.error
 import urllib.request
@@ -21,10 +22,23 @@ log = logging.getLogger("llm")
 
 
 def _sampling_options() -> dict:
-    """Общие настройки сэмплинга (core.config, переопределяются env-переменными)."""
-    return {"num_ctx": LLM_NUM_CTX, "temperature": LLM_TEMPERATURE,
-            "top_p": LLM_TOP_P, "repeat_penalty": LLM_REPEAT_PENALTY,
-            "repeat_last_n": 128, "presence_penalty": 0.3}
+    """Общие настройки сэмплинга (переопределяются env-переменными NIMA_LLM_*).
+
+    Дефолты подобраны под связность 4B на русском (v14.8.51):
+    - temperature 0.6 (было 0.7) — меньше «словесного салата»;
+    - top_k 40 + min_p 0.05 — отсекают маловероятную ерунду, характер не трогают;
+    - presence_penalty 0.0 (было 0.3) — не выталкивает модель с темы (причина
+      ответов «невпопад» у маленькой модели).
+    LLM_TEMPERATURE из core.config остаётся совместимым: тот же NIMA_LLM_TEMPERATURE.
+    """
+    return {"num_ctx": LLM_NUM_CTX,
+            "temperature": float(os.environ.get("NIMA_LLM_TEMPERATURE", "0.6")),
+            "top_p": LLM_TOP_P,
+            "top_k": int(os.environ.get("NIMA_LLM_TOP_K", "40")),
+            "min_p": float(os.environ.get("NIMA_LLM_MIN_P", "0.05")),
+            "repeat_penalty": LLM_REPEAT_PENALTY,
+            "repeat_last_n": 128,
+            "presence_penalty": float(os.environ.get("NIMA_LLM_PRESENCE_PENALTY", "0.0"))}
 
 
 class LLMError(RuntimeError):
