@@ -31,7 +31,7 @@ from core.logging_setup import setup_logging
 setup_logging()
 log = logging.getLogger("start")
 
-VERSION = "v14.8.50"
+VERSION = "v14.8.52"
 
 # Эксклюзивный lock единственного экземпляра (живой тест v14.8.2: повторная
 # кнопка «ЗАПУСТИТЬ» поверх работающей Нимфеи = второй оркестратор и ВТОРОЕ
