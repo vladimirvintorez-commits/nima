@@ -10,9 +10,14 @@ logs/
 node_modules/
 avatar/node_modules/
 
-# Приватные данные (диалоги, профили людей)
+# Приватные данные (диалоги, профили людей).
+# ВАЖНО: прячем данные памяти, но НЕ исходный код — иначе модуль memory/ не
+# попадёт в репозиторий и проект упадёт на чистой копии
+# (from memory.memory_module import MemoryModule).
 memory.json
-memory/
+memory/*
+!memory/*.py
+!memory/README.md
 data/memory_backup_*.json
 data/people_removed_*.json
 data/backups/
